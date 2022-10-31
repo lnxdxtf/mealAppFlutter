@@ -24,7 +24,7 @@ class _MealAppState extends State<MealApp> {
   Settings settings = Settings();
   void _filterMeals(Settings settings) {
     setState(() {
-      	this.settings = settings;
+      this.settings = settings;
       _availableMeal = dummyMeals.where((meal) {
         final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
         final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
@@ -37,6 +37,18 @@ class _MealAppState extends State<MealApp> {
             !filterLactose;
       }).toList();
     });
+  }
+
+  void _toggleFav(Meal mealFav) {
+    setState(() {
+      _favMeals.contains(mealFav)
+          ? _favMeals.remove(mealFav)
+          : _favMeals.add(mealFav);
+    });
+  }
+
+  bool _isFav(Meal meal) {
+    return _favMeals.contains(meal);
   }
 
   @override
@@ -66,10 +78,10 @@ class _MealAppState extends State<MealApp> {
         appBarTheme: thm1.appBarTheme.copyWith(),
       ),
       routes: {
-        AppRoutes.home: (ctx) => const TabsScreen(),
+        AppRoutes.home: (ctx) => TabsScreen(_favMeals),
         AppRoutes.categoriesMeals: (ctx) =>
             CategoriesMealsScreen(_availableMeal),
-        AppRoutes.mealDetail: (ctx) => const MealDetailScreen(),
+        AppRoutes.mealDetail: (ctx) => MealDetailScreen(_toggleFav, _isFav),
         AppRoutes.settings: (ctx) => SettingsScreen(settings, _filterMeals),
       },
       // onGenerateRoute: (settings) {
