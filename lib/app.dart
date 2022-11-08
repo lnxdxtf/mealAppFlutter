@@ -58,7 +58,7 @@ class _MealAppState extends State<MealApp> {
       theme: thm1.copyWith(
         canvasColor: const Color.fromRGBO(255, 241, 212, 1),
         colorScheme: thm1.colorScheme.copyWith(
-            primary: Colors.red.shade500,
+            primary: Colors.red.shade400,
             secondary: Colors.teal.shade300,
             tertiary: Colors.amber),
         textTheme: thm1.textTheme.copyWith(
